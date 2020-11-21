@@ -10,6 +10,7 @@ namespace chattr.Models.Tasks
     {
         public Guid ID { get; set; } = Guid.NewGuid();
         public string Name { get; set; }
+        public string SubjectMatter { get; set; }
         public StartAction StartNode { get; set; } = new StartAction();
         public ReplyAction ReplyNode { get; set; } = new ReplyAction();
 

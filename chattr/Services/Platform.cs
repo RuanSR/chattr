@@ -26,20 +26,9 @@ namespace chattr.Services
             botConfig.BotName = "Platform Test Bot";
             botConfig.BotGreeting = "Hi! Welcome to chattr.  chattr is an easy-to-use chatbot platform which easily lets you build and deploy chatbots.  The platform supports exact phrase matches and machine learning to classify a request.";
 
-            //create greeting FAQ
-            var helpFAQ = new Conversation();
-            helpFAQ.Name = "helpSample";
-            helpFAQ.AddUtterance("help");
-            helpFAQ.AddUtterance("!help");
-            helpFAQ.AddUtterance("what can I ask you");
-            helpFAQ.AddUtterance("halp");
-            helpFAQ.AddUtterance("what can you do");
-            helpFAQ.AddUtterance("what can I ask");
-            helpFAQ.AddResponse("This is a sample use case -- you can ask me what chattr is. I also understand various hello/goodbye phrases.");
-            botConfig.Conversations.Add(helpFAQ);
-
             var gitFAQ = new Conversation();
             gitFAQ.Name = "gitSample";
+            gitFAQ.SubjectMatter = "Github, what is.";
             gitFAQ.AddUtterance("what is github");
             gitFAQ.AddUtterance("whats github");
             gitFAQ.AddUtterance("define github");
@@ -50,6 +39,7 @@ namespace chattr.Services
 
             var stackFAQ = new Conversation();
             stackFAQ.Name = "stackFAQ";
+            stackFAQ.SubjectMatter = "Stack, what is";
             stackFAQ.AddUtterance("tell me about the stack");
             stackFAQ.AddUtterance("what software stack is this");
             stackFAQ.AddUtterance("what is running this");
@@ -91,6 +81,7 @@ namespace chattr.Services
             //create csharp FAQ
             var csharpFAQ = new Conversation();
             csharpFAQ.Name = "chatterFAQ";
+            csharpFAQ.SubjectMatter = "What is chattr.";
             csharpFAQ.AddUtterance("What is chattr");
             csharpFAQ.AddUtterance("Whats chattr");
             csharpFAQ.AddUtterance("tell me about chattr");
@@ -128,6 +119,7 @@ namespace chattr.Services
             //Showcase ability to conditionally check data, and ask/store what the user's color preference is.
             //On the second time, the bot will tell the stored data instead of asking for it
             var favColorConvo = new Conversation();
+            favColorConvo.SubjectMatter = "What color do I prefer?";
             favColorConvo.SetConversationName("favoriteColorPref");
             favColorConvo.SetStartActionName("favoriteColorPrefStart");
             favColorConvo.AddUtterances(new[] { "What color do I prefer?", "Ask me my favorite color", "Ask what my favorite color is", "Ask me my color preference" });
@@ -178,6 +170,19 @@ namespace chattr.Services
            //train a model based on the created configuration
            var modelName = Platform.AIService.Train(botConfig);
             botConfig.ModelFile = modelName;
+
+
+            //create greeting FAQ
+            var helpFAQ = new Conversation();
+            helpFAQ.Name = "helpSample";
+            helpFAQ.AddUtterance("help");
+            helpFAQ.AddUtterance("!help");
+            helpFAQ.AddUtterance("what can I ask you");
+            helpFAQ.AddUtterance("halp");
+            helpFAQ.AddUtterance("what can you do");
+            helpFAQ.AddUtterance("what can I ask");
+            helpFAQ.AddResponse($"This is a sample use case -- you can ask me what chattr is. I also understand various hello/goodbye phrases. Subjects i can answer: {botConfig.GetSubjects()}");
+            botConfig.Conversations.Add(helpFAQ);
 
             //save bot
             botConfig.Save();

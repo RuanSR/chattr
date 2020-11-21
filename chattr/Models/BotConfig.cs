@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace chattr.Models
@@ -30,6 +31,19 @@ namespace chattr.Models
 
         }
 
+        public string GetSubjects()
+        {
+            var subjects = new StringBuilder();
+            foreach (var conversasion in Conversations)
+            {
+                if (!string.IsNullOrEmpty(conversasion.SubjectMatter))
+                {
+                    subjects.AppendLine($"({conversasion.SubjectMatter})");
+                }
+            }
+
+            return subjects.ToString();
+        }
         public void AddConversation(Conversation newConversation)
         {
             Conversations.Add(newConversation);
